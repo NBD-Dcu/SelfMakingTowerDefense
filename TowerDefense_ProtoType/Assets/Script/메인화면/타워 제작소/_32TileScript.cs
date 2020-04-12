@@ -17,7 +17,7 @@ public class _32TileScript : MonoBehaviour
         
     }
     
-    private void OnMouseUp()
+    private void OnMouseDown()
     {
         DrawingManager.drawingManager.ChangePixel(positionX, positionY, DM.currentColor);
     }
