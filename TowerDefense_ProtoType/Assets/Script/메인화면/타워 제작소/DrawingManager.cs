@@ -144,16 +144,16 @@ public class DrawingManager : MonoBehaviour
                     {
                         byte[] bytes = _32Canvas.GetComponent<SpriteRenderer>().sprite.texture.EncodeToPNG();
                         File.WriteAllBytes(Application.persistentDataPath + towerImagePath + "/" + InputNameField.text + ".png", bytes);
-                        Debug.Log("파일 저장됨");
+                        GameManager.gameManager.ShowGuideMessage("파일 저장됨");
                     }
                     else
                     {
-                        Debug.Log("같은 이름이 존재합니다");
+                        GameManager.gameManager.ShowGuideMessage("동일한 이름이 존재합니다");
                     }
                 }
                 else
                 {
-                    Debug.Log("이름을 입력해 주세요");
+                    GameManager.gameManager.ShowGuideMessage("이름을 입력해 주세요");
                 }
             }
         }
@@ -176,13 +176,6 @@ public class DrawingManager : MonoBehaviour
 
     void LoadImageList()
     {
-        List<Sprite> imageList = new List<Sprite>();
-        Texture2D imageTexture = new Texture2D(0, 0);
-        Sprite PointedImage;
-        GameObject InteractableImageButtonPrefab = Resources.Load<GameObject>("Prefab/DrawingScreen/상호작용 가능한 이미지 버튼"); //상호작용 가능한 이미지 리스트를 나타내는데 사용될 버튼 프리팹
-
-        string imageName = null;
-
         string FolderPath;
         if (mode == 0)
         {
@@ -192,40 +185,28 @@ public class DrawingManager : MonoBehaviour
         {
             FolderPath = projectileImagePath;
         }
-
-        DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + FolderPath);
-
-        int i = 0, j = 0;// 이미지 리스트 배치에 사용될 가로, 세로 카운터
-        foreach (FileInfo f in di.GetFiles())
+        List<SpriteWithInformation> imageList = new List<SpriteWithInformation>();
+        GameManager.gameManager.LoadImageList(Application.persistentDataPath + FolderPath, imageList);
+        GameObject InteractableImageButtonPrefab = Resources.Load<GameObject>("Prefab/DrawingScreen/상호작용 가능한 이미지 버튼"); //상호작용 가능한 이미지 리스트를 나타내는데 사용될 버튼 프리팹
+        int j = 0, k = 0;//나중에 더 나은 구조로 바꾸기
+        for (int i = 0; i < imageList.Count; i++)
         {
-            imageName = f.Name.Substring(0, f.Name.Length - 4);//확장자와 경로를 제외한 해당 파일의 이름
-            byte[] bytes = File.ReadAllBytes(f.ToString());
-
-            if (bytes.Length > 0)
+            //InteractableImageButtonPrefab.GetComponent<Image>().sprite = imageList[i].sprite;
+            GameObject InteractableImageButton = Instantiate(InteractableImageButtonPrefab, loadScreen.transform);//버튼 생성
+            InteractableImageButton.GetComponent<Image>().sprite = imageList[i].sprite;
+            Debug.Log(imageList[1].spriteName);
+            InteractableImageButton.GetComponent<Button>().onClick.AddListener(ClickImage);//버튼에 리스너 부착
+            InteractableImageButton.GetComponent<ImageInformation>().filePath = imageList[i].spritePath;
+            InteractableImageButton.GetComponent<ImageInformation>().fileName = imageList[i].spriteName;
+            
+            interactableButtons.Add(InteractableImageButton);
+            if (InteractableImageButton.transform.parent.GetComponent<RectTransform>().sizeDelta.x / (j * 90) < 1)//해상도에 맞게 고치기
             {
-                imageTexture = new Texture2D(0, 0);
-                imageTexture.LoadImage(bytes);
-                Rect rect = new Rect(0, 0, imageTexture.width, imageTexture.height);
-                PointedImage = Sprite.Create(imageTexture, rect, new Vector2(0.5f, 0.5f),32);
-                PointedImage.texture.filterMode = FilterMode.Point;
-
-                InteractableImageButtonPrefab.GetComponent<Image>().sprite = PointedImage;
-                GameObject InteractableImageButton = Instantiate(InteractableImageButtonPrefab, loadScreen.transform);
-
-                InteractableImageButton.GetComponent<Button>().onClick.AddListener(ClickImage);
-
-                InteractableImageButton.GetComponent<ImageInformation>().filePath = f.ToString();
-                InteractableImageButton.GetComponent<ImageInformation>().fileName = imageName;
-
-                interactableButtons.Add(InteractableImageButton);
-                if (InteractableImageButton.transform.parent.GetComponent<RectTransform>().sizeDelta.x / (i * 90) < 1)
-                {
-                    i = 0;
-                    j++;
-                }
-                InteractableImageButton.transform.localPosition = new Vector2(-400 + i * 90, 0 - j * 90);
-                i++;
+                j = 0;
+                k++;
             }
+            InteractableImageButton.transform.localPosition = new Vector2(-400 + j * 90, 0 - k * 90);//해상도에 맞게 고치기
+            j++;
         }
     }
 
@@ -243,7 +224,6 @@ public class DrawingManager : MonoBehaviour
                 }
             }
         }
-
         TerminateLoadScreen();
     }
     public void ClickImage()
@@ -267,7 +247,6 @@ public class DrawingManager : MonoBehaviour
     }
     public void TerminateLoadScreen()
     {
-        
         drawingScreen.gameObject.SetActive(true);
         loadScreen.gameObject.SetActive(false);
     }
