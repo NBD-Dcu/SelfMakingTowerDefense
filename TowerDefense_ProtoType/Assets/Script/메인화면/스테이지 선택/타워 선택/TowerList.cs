@@ -24,7 +24,7 @@ public class TowerList : MonoBehaviour
     void GetTowerPaths()
     {
         DirectoryInfo di = new DirectoryInfo(GameManager.gameManager.resourcesFolderPath + "/" + GameManager.gameManager.towerListPath);
-        foreach(FileInfo f in di.GetFiles())
+        foreach (FileInfo f in di.GetFiles())
         {
             string towerName = f.Name.Substring(0, f.Name.Length - 7);
             if (f.Extension.ToLower().CompareTo(".prefab") == 0)

@@ -631,7 +631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourcesFolderPath: Assets/Resources
-  towerListPath: "\uC720\uC800\uC81C\uC791\uD30C\uC77C\uC800\uC7A5\uC18C/\uD0C0\uC6CC\uAC1D\uCCB4"
+  towerListPath: 
   uiCanvas: {fileID: 0}
   selectedTowerList:
   - {fileID: 0}

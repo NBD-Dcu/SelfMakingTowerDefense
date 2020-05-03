@@ -8,8 +8,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;//어디서든 접근 가능하게 하는 static 인스턴스
 
-    public string resourcesFolderPath = "Assets/Resources";
-    public string towerListPath = "유저제작파일저장소/타워객체";
+    public string resourcesFolderPath = "Assets/Resources";//문제없을시 나중에 삭제할 것
+    public string towerListPath = "유저제작파일저장소/타워객체";//문제없을시 나중에 삭제할 것
+    public string towerImagePath = "/유저제작파일저장소/타워이미지";
+    public string projectileImagePath = "/유저제작파일저장소/투사체이미지";
+    public string towerObjectPath = "/유저제작파일저장소/타워객체";
+
+
     string uiPrefabFolderPath = "Prefab/UI/";
     public GameObject uiCanvas = null;
     public GameObject[] selectedTowerList = new GameObject[2];//public이라 실제로는 인스펙터에서 사이즈가 지정됨, 후에 접근자로 제어를 하든가 하자
@@ -20,10 +25,11 @@ public class GameManager : MonoBehaviour
     {
         if (gameManager == null)
         {
+            Screen.SetResolution(1920, 1080, true);
             gameManager = this;
             DontDestroyOnLoad(this);
-            Screen.SetResolution(Screen.width, Screen.width * (16) / 10, true);
         }
+        GameManager.gameManager.uiCanvas = GameObject.Find("UICanvas");
     }
 
     private void Update()

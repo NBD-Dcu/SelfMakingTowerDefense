@@ -23,11 +23,9 @@ public class DrawingManager : MonoBehaviour
     float _8DistantUnit = 0.125f;
     GameObject[,] _8InterActiveTiles = new GameObject[8, 8];
     //기타등등
-    public string towerImagePath;
-    public string projectileImagePath;
-    public string towerListPath;
-    string drawingScreenPath = "Prefab/DrawingScreen";
-
+    //public string towerImagePath;
+    //public string projectileImagePath;
+    GameManager gmInstance = null;
     int mode = 0;//타워 제작모드 = 0, 투사체 제작모드 = 1
 
     public Color currentColor;
@@ -47,9 +45,10 @@ public class DrawingManager : MonoBehaviour
     {
         if (drawingManager == null)
         {
+            gmInstance = GameManager.gameManager;
             drawingManager = this;
-            _32TilePrefab = Resources.Load<GameObject>(drawingScreenPath + "/" + "32상호작용1픽셀");
-            _8TilePrefab = Resources.Load<GameObject>(drawingScreenPath + "/" + "8상호작용1픽셀");
+            _32TilePrefab = Resources.Load<GameObject>("Prefab/DrawingScreen" + "/" + "32상호작용1픽셀");
+            _8TilePrefab = Resources.Load<GameObject>("Prefab/DrawingScreen" + "/" + "8상호작용1픽셀");
             CreateInterActiveTiles();
             InitGrid(32, 32);
             mode = 1;
@@ -170,18 +169,16 @@ public class DrawingManager : MonoBehaviour
         string folderPath = null;
         if(mode == 0)
         {
-            folderPath = towerImagePath;
+            folderPath = gmInstance.towerImagePath;
         }
         else if(mode == 1)
         {
-            folderPath = projectileImagePath;
+            folderPath = gmInstance.projectileImagePath;
         }
         if (!Directory.Exists(Application.persistentDataPath + folderPath))
         {
             Directory.CreateDirectory(Application.persistentDataPath + folderPath);
         }
-        else
-        {
             if (InputNameField.text.Length != 0)
             {
                 bool isExistion = false;
@@ -220,7 +217,6 @@ public class DrawingManager : MonoBehaviour
             {
                 GameManager.gameManager.ShowGuideMessage("이름을 입력해 주세요");
             }
-        }
 
     }
     
@@ -245,11 +241,11 @@ public class DrawingManager : MonoBehaviour
         string FolderPath;
         if (mode == 0)
         {
-            FolderPath = towerImagePath;
+            FolderPath = gmInstance.towerImagePath;
         }
         else
         {
-            FolderPath = projectileImagePath;
+            FolderPath = gmInstance.projectileImagePath;
         }
         List<SpriteWithInformation> imageList = new List<SpriteWithInformation>();
         GameManager.gameManager.LoadImageList(Application.persistentDataPath + FolderPath, imageList);
@@ -261,7 +257,6 @@ public class DrawingManager : MonoBehaviour
             RectTransform rectTransForm = InteractableImageButton.GetComponent<RectTransform>();
 
             InteractableImageButton.GetComponent<Image>().sprite = imageList[i].sprite;
-            Debug.Log(imageList[1].spriteName);
             InteractableImageButton.GetComponent<Button>().onClick.AddListener(ClickImage);//버튼에 리스너 부착
             InteractableImageButton.GetComponent<ImageInformation>().filePath = imageList[i].spritePath;
             InteractableImageButton.GetComponent<ImageInformation>().fileName = imageList[i].spriteName;
