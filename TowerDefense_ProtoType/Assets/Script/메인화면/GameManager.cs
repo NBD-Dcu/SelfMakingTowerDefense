@@ -8,16 +8,29 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;//어디서든 접근 가능하게 하는 static 인스턴스
 
+    //각종 패스
     public string resourcesFolderPath = "Assets/Resources";//문제없을시 나중에 삭제할 것
     public string towerListPath = "유저제작파일저장소/타워객체";//문제없을시 나중에 삭제할 것
     public string towerImagePath = "/유저제작파일저장소/타워이미지";
     public string projectileImagePath = "/유저제작파일저장소/투사체이미지";
     public string towerObjectPath = "/유저제작파일저장소/타워객체";
-
-
+    public string towerObjInfoStore = "타워오브젝트정보체";
     string uiPrefabFolderPath = "Prefab/UI/";
+    
+
+    //모든 씬 공통사항
     public GameObject uiCanvas = null;
-    public GameObject[] selectedTowerList = new GameObject[2];//public이라 실제로는 인스펙터에서 사이즈가 지정됨, 후에 접근자로 제어를 하든가 하자
+    //스테이지 선택 씬 변수
+    public string StageInformationFolderPath = "StageInformation";
+    StageInformation _currentStageInfo = null;//아마도 get ,set으로 구현해야 할 거같음
+    public StageInformation currentStageInfo
+    {
+        get { return _currentStageInfo;}
+        set { _currentStageInfo = value; }
+    }
+
+    //타워 선택 씬 변수
+    public TowerObjectInformation[] towerObjInfos;
 
     
 
@@ -34,6 +47,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (_currentStageInfo ==null) { }
     }
 
     public void ChangeStage(string stageName)
@@ -51,28 +65,52 @@ public class GameManager : MonoBehaviour
     //입력한 폴더의 이미지들을 파라미터로 지정된 리스트에 Sprite형태로 저장하는 함수
     public void LoadImageList(string folderPath, List<SpriteWithInformation> imageList)
     {
-        Texture2D imageTexture = new Texture2D(0, 0);
-        Sprite pointedImage;
         DirectoryInfo di = new DirectoryInfo(folderPath);
-
         int i = 0;
-        foreach(FileInfo f in di.GetFiles())
+        foreach (FileInfo f in di.GetFiles())
         {
             SpriteWithInformation instance = new SpriteWithInformation();
-            byte[] bytes = File.ReadAllBytes(f.ToString());
-            if(bytes.Length > 0)
+            instance.sprite = LoadImageToSprite(f.ToString());
+            instance.spriteName = f.Name.Substring(0, f.Name.Length - 4);
+            instance.spritePath = f.ToString();
+            imageList.Add(instance);
+            i++;
+        }
+    }
+    public Sprite LoadImageToSprite(string filePath)
+    {
+        Texture2D imageTexture = new Texture2D(0, 0);
+        Sprite pointedImage = null;
+        byte[] bytes = File.ReadAllBytes(filePath);
+        if (bytes.Length > 0)
+        {
+            imageTexture = new Texture2D(0, 0);
+            imageTexture.LoadImage(bytes);
+            Rect rect = new Rect(0, 0, imageTexture.width, imageTexture.height);
+            pointedImage = Sprite.Create(imageTexture, rect, new Vector2(0.5f, 0.5f), 32);
+            pointedImage.texture.filterMode = FilterMode.Point;
+        }
+        else
+        {
+            Debug.Log("해당 경로에 파일이 존재하지 않습니다");
+        }
+        return pointedImage;
+    }
+    public void LoadTowerObjectList(string folderPath, List<TowerObjectInformation> objectList)
+    {
+        DirectoryInfo di = new DirectoryInfo(folderPath);
+        TowerObjectInformation instance = new TowerObjectInformation();
+        if (!Directory.Exists(Application.persistentDataPath + GameManager.gameManager.towerObjectPath))
+        {
+            Debug.Log("오류! 폴더가 존재하지 않습니다");
+        }
+        else {
+            for(int i=0; i< di.GetDirectories().Length; i++)
             {
-                imageTexture = new Texture2D(0, 0);
-                imageTexture.LoadImage(bytes);
-                Rect rect = new Rect(0, 0, imageTexture.width, imageTexture.height);
-                pointedImage = Sprite.Create(imageTexture, rect, new Vector2(0.5f, 0.5f), 32);
-                pointedImage.texture.filterMode = FilterMode.Point;
-                instance.sprite = pointedImage;
-                instance.spriteName = f.Name.Substring(0, f.Name.Length - 4);
-                instance.spritePath = f.ToString();
-                imageList.Add(instance);
-                i++;
+                string fromJsonData = File.ReadAllText(di.GetDirectories()[i] + "/타워정보/status.json");
+                objectList.Add(JsonUtility.FromJson<TowerObjectInformation>(fromJsonData));
             }
         }
     }
+    
 }

@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 230609795}
   - component: {fileID: 230609794}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,10 +632,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourcesFolderPath: Assets/Resources
   towerListPath: 
+  towerImagePath: "/\uC720\uC800\uC81C\uC791\uD30C\uC77C\uC800\uC7A5\uC18C/\uD0C0\uC6CC\uC774\uBBF8\uC9C0"
+  projectileImagePath: "/\uC720\uC800\uC81C\uC791\uD30C\uC77C\uC800\uC7A5\uC18C/\uD22C\uC0AC\uCCB4\uC774\uBBF8\uC9C0"
+  towerObjectPath: "/\uC720\uC800\uC81C\uC791\uD30C\uC77C\uC800\uC7A5\uC18C/\uD0C0\uC6CC\uAC1D\uCCB4"
+  towerObjInfoStore: "\uD0C0\uC6CC\uC624\uBE0C\uC81D\uD2B8\uC815\uBCF4\uCCB4"
   uiCanvas: {fileID: 0}
-  selectedTowerList:
-  - {fileID: 0}
-  - {fileID: 0}
+  StageInformationFolderPath: StageInformation
+  towerObjInfos:
+  - towerObjectName: 
+    projectileName: 
+    towerImagePath: 
+    projectileImagePath: 
+    thisFilePath: 
+    attackDamage: 0
+    attackSpeed: 0
+    cost: 0
+  - towerObjectName: 
+    projectileName: 
+    towerImagePath: 
+    projectileImagePath: 
+    thisFilePath: 
+    attackDamage: 0
+    attackSpeed: 0
+    cost: 0
+  - towerObjectName: 
+    projectileName: 
+    towerImagePath: 
+    projectileImagePath: 
+    thisFilePath: 
+    attackDamage: 0
+    attackSpeed: 0
+    cost: 0
+  - towerObjectName: 
+    projectileName: 
+    towerImagePath: 
+    projectileImagePath: 
+    thisFilePath: 
+    attackDamage: 0
+    attackSpeed: 0
+    cost: 0
 --- !u!1 &544533031
 GameObject:
   m_ObjectHideFlags: 0

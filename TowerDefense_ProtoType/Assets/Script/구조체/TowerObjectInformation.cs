@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class TowerObjectInformation : MonoBehaviour
+[Serializable]
+public class TowerObjectInformation
 {
-    //public string towerImageFile = null;
-    //public string projectileImageFile = null;
-    public string towerObjectName = null;//추후에 문제없으면 삭제
-    public Sprite towerImage = null;
-    public Sprite projectileImage = null;
+    public string towerObjectName = null; 
+    public string projectileName = null;
+    public string towerImagePath = null;
+    public string projectileImagePath = null;
+    public string thisFilePath = null;
     public int attackDamage = 0;
     public int attackSpeed = 0;
     public int cost = 0;

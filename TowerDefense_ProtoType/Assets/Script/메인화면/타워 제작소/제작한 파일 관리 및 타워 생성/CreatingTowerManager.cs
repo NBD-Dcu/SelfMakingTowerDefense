@@ -32,7 +32,6 @@ public class CreatingTowerManager : MonoBehaviour
         selectedImageButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();//눌러진 이미지버튼 객체를 가져옴
         ImageInformation btInfo = selectedImageButton.GetComponent<ImageInformation>(); 
         towerImageView.sprite = selectedImageButton.GetComponent<Image>().sprite;
-        //추후에 필요없으면 삭제-1
         currentSelectedTowerImagePath = btInfo.filePath;
         currentSelectedTowerImageName = btInfo.fileName;
     }
@@ -41,7 +40,6 @@ public class CreatingTowerManager : MonoBehaviour
         selectedImageButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         ImageInformation btInfo = selectedImageButton.GetComponent<ImageInformation>();
         projectileImageView.sprite = selectedImageButton.GetComponent<Image>().sprite;
-        //추후에 필요없으면 삭제-1
         currentSelectedProjectileImagePath = btInfo.filePath;
         currentSelectedProjectileImageName = btInfo.fileName;
     }
@@ -79,6 +77,7 @@ public class CreatingTowerManager : MonoBehaviour
         }
     }
 
+    //json 파일 생성 및 로드 실험을 따로 해봐야 할 것 같음
     public void CreatingTower()
     {
         if (!Directory.Exists(Application.persistentDataPath + GameManager.gameManager.towerObjectPath))
@@ -88,30 +87,36 @@ public class CreatingTowerManager : MonoBehaviour
 
         if (currentSelectedTowerImagePath != null && currentSelectedProjectileImagePath != null)
         {
+
             TowerObjectInformation towerInfo = new TowerObjectInformation();
             //타워 오브젝트 폴더 지정
             DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + GameManager.gameManager.towerObjectPath);
             int nextFolderIndex = Directory.GetDirectories(Application.persistentDataPath + GameManager.gameManager.towerObjectPath, "*", SearchOption.TopDirectoryOnly).Length;
             string nextFolderPath = Application.persistentDataPath + GameManager.gameManager.towerObjectPath + "/" + nextFolderIndex;
             Directory.CreateDirectory(nextFolderPath);
-            //추후에 필요없으면 삭제-2
-            //타워 이미지 저장
-            //string DestFile = Path.Combine(nextFolderPath, currentSelectedTowerImageName);
-            //File.Copy(currentSelectedTowerImagePath, DestFile + ".png", true);
-            //towerInfo.towerImageFile = DestFile;//타워 이미지 패스 저장
-            //타워 투사체 저장
-            //DestFile = Path.Combine(nextFolderPath, currentSelectedProjectileImageName);
-            //File.Copy(currentSelectedProjectileImagePath, DestFile + ".png", true);
-            //towerInfo.projectileImageFile = DestFile;//투사체 이미지 패스 저장
-            //타워 정보 저장
-            towerInfo.towerImage = towerImageView.sprite;
-            towerInfo.projectileImage = projectileImageView.sprite;
+            Directory.CreateDirectory(nextFolderPath + "/타워이미지");
+            Directory.CreateDirectory(nextFolderPath + "/투사체이미지");
+            Directory.CreateDirectory(nextFolderPath + "/타워정보");
+
+            string towerObjTowerImagePath = Path.Combine(nextFolderPath + "/타워이미지", currentSelectedTowerImageName + ".png");
+            string towerobjProjectileImagePath = Path.Combine(nextFolderPath + "/투사체이미지", currentSelectedProjectileImageName + ".png");
+            File.Copy(currentSelectedTowerImagePath, towerObjTowerImagePath);
+            File.Copy(currentSelectedProjectileImagePath, towerobjProjectileImagePath);
+
+            towerInfo.towerImagePath = towerObjTowerImagePath;
+            towerInfo.projectileImagePath = towerobjProjectileImagePath;
+            towerInfo.towerObjectName = currentSelectedTowerImageName;
+            towerInfo.projectileName = currentSelectedProjectileImageName;
             towerInfo.attackDamage = int.Parse(statusUi.attackDamage.text);
             towerInfo.attackSpeed = int.Parse(statusUi.attackSpeed.text);
             towerInfo.cost = int.Parse(statusUi.cost.text);
-            string toJsonData = JsonUtility.ToJson(towerInfo);
-            File.WriteAllText(nextFolderPath + "/status", toJsonData);
+
+            string filePath = nextFolderPath + "/타워정보/status.json";
+            towerInfo.thisFilePath = filePath;
             
+            string toJsonData = JsonUtility.ToJson(towerInfo);
+            File.WriteAllText(filePath, toJsonData);
+
             GameManager.gameManager.ShowGuideMessage("타워 객체가 생성되었습니다");
         }
         else GameManager.gameManager.ShowGuideMessage("타워와 투사체를 선택해주세요");

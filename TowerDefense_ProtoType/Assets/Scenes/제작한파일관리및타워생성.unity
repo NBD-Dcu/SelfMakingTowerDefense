@@ -1764,7 +1764,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 568503329}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1127295555}
+        m_MethodName: ChangeStage
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\uD0C0\uC6CC\uAD00\uB9AC"
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &568503329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3242,6 +3253,7 @@ MonoBehaviour:
   projectileImagePath: "/\uC720\uC800\uC81C\uC791\uD30C\uC77C\uC800\uC7A5\uC18C/\uD22C\uC0AC\uCCB4\uC774\uBBF8\uC9C0"
   towerObjectPath: "/\uC720\uC800\uC81C\uC791\uD30C\uC77C\uC800\uC7A5\uC18C/\uD0C0\uC6CC\uAC1D\uCCB4"
   uiCanvas: {fileID: 0}
+  StageInformationFolderPath: StageInformation
   selectedTowerList:
   - {fileID: 0}
   - {fileID: 0}
@@ -3989,7 +4001,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD504\uB9AC\uC14B \uAD00\uB9AC"
+  m_Text: "\uD0C0\uC6CC \uAD00\uB9AC"
 --- !u!222 &1391458881
 CanvasRenderer:
   m_ObjectHideFlags: 0

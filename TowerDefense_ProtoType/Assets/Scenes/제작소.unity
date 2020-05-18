@@ -905,6 +905,7 @@ MonoBehaviour:
   towerListPath: "\uC720\uC800\uC81C\uC791\uD30C\uC77C\uC800\uC7A5\uC18C/\uD0C0\uC6CC\uAC1D\uCCB4"
   towerImagePath: "/\uC720\uC800\uC81C\uC791\uD30C\uC77C\uC800\uC7A5\uC18C/\uD0C0\uC6CC\uC774\uBBF8\uC9C0"
   projectileImagePath: "/\uC720\uC800\uC81C\uC791\uD30C\uC77C\uC800\uC7A5\uC18C/\uD22C\uC0AC\uCCB4\uC774\uBBF8\uC9C0"
+  towerObjectPath: "/\uC720\uC800\uC81C\uC791\uD30C\uC77C\uC800\uC7A5\uC18C/\uD0C0\uC6CC\uAC1D\uCCB4"
   uiCanvas: {fileID: 1439836922}
   selectedTowerList:
   - {fileID: 0}
@@ -3060,7 +3061,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 0}
+  m_SizeDelta: {x: 3, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1274205479
 MonoBehaviour:
@@ -4101,7 +4102,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.000021196922, y: 0}
-  m_SizeDelta: {x: -103, y: 0}
+  m_SizeDelta: {x: -123, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1636408792
 MonoBehaviour:
@@ -5197,7 +5198,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0.000030517578}
-  m_SizeDelta: {x: -17, y: 28}
+  m_SizeDelta: {x: 3, y: 28}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1915519023
 MonoBehaviour:
