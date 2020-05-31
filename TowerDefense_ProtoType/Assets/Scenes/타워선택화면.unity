@@ -203,7 +203,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1582394853}
   m_Direction: 0
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1121,15 +1121,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: GotoBack
-        m_Mode: 1
+      - m_Target: {fileID: 1915209806}
+        m_MethodName: ChangeStage
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: "\uC2A4\uD14C\uC774\uC9C0\uC120\uD0DD\uD654\uBA74"
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &680713609
@@ -2055,15 +2055,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ChangeStage
+      - m_Target: {fileID: 1915209806}
+        m_MethodName: MoveToNstage
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: "\uD29C\uD1A0\uB9AC\uC5BC \uC2A4\uD14C\uC774\uC9C0"
+          m_StringArgument: "\uD50C\uB808\uC774\uC2A4\uD14C\uC774\uC9C0"
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1296338457
@@ -3325,7 +3325,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1084204110}
   m_HandleRect: {fileID: 1084204109}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

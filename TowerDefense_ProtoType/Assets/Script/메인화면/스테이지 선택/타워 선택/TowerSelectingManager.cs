@@ -22,8 +22,7 @@ public class TowerSelectingManager : MonoBehaviour
         dragingImage = Resources.Load<Image>("드래깅시 생성되는 이미지"); 
         CreateTowerObjList();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -49,18 +48,15 @@ public class TowerSelectingManager : MonoBehaviour
 
     void ClickTowerObjList()
     {
-        towerInfoOutput.SetActive(true);
-        TowerObjectInformation clickedButton = EventSystem.current.currentSelectedGameObject.GetComponent<TowerObject>().towerObjInfo;
-        towerInfoOutput.transform.Find("타워이미지").GetComponent<Image>().sprite = gm.LoadImageToSprite(clickedButton.towerImagePath);
-        towerInfoOutput.transform.Find("투사체이미지").GetComponent<Image>().sprite = gm.LoadImageToSprite(clickedButton.projectileImagePath);
-        towerInfoOutput.transform.Find("공격력수치표기공간").GetComponent<Text>().text = clickedButton.attackDamage.ToString();
-        towerInfoOutput.transform.Find("공격속도수치표기공간").GetComponent<Text>().text = clickedButton.attackSpeed.ToString();
-        towerInfoOutput.transform.Find("비용수치표기공간").GetComponent<Text>().text = clickedButton.cost.ToString();
+        RectTransform clickedButtonTr = EventSystem.current.currentSelectedGameObject.GetComponent<RectTransform>();
+        TowerObjectInformation clickedTowerInfo = EventSystem.current.currentSelectedGameObject.GetComponent<TowerObject>().towerObjInfo;
+        RenewalTowerInfoOutput(clickedTowerInfo, new Vector2(clickedButtonTr.position.x, clickedButtonTr.position.y));
     }
 
     public void ClickTowerSocketList()
     {
         Button clickedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+        RectTransform clickedBtTr = EventSystem.current.currentSelectedGameObject.GetComponent<RectTransform>();
         int socketIndex = 0;
         for(int i=0; i<towerSockets.Length; i++)
         {
@@ -76,18 +72,41 @@ public class TowerSelectingManager : MonoBehaviour
         }
         else
         {
-            towerInfoOutput.SetActive(true);
-            towerInfoOutput.transform.Find("타워이미지").GetComponent<Image>().sprite = gm.LoadImageToSprite(gm.towerObjInfos[socketIndex].towerImagePath);
-            towerInfoOutput.transform.Find("투사체이미지").GetComponent<Image>().sprite = gm.LoadImageToSprite(gm.towerObjInfos[socketIndex].projectileImagePath);
-            towerInfoOutput.transform.Find("공격력수치표기공간").GetComponent<Text>().text = gm.towerObjInfos[socketIndex].attackDamage.ToString();
-            towerInfoOutput.transform.Find("공격속도수치표기공간").GetComponent<Text>().text = gm.towerObjInfos[socketIndex].attackSpeed.ToString();
-            towerInfoOutput.transform.Find("비용수치표기공간").GetComponent<Text>().text = gm.towerObjInfos[socketIndex].cost.ToString();
+            RenewalTowerInfoOutput(gm.towerObjInfos[socketIndex],new Vector2(clickedBtTr.position.x,clickedBtTr.position.y));
         }
+    }
+
+    void RenewalTowerInfoOutput(TowerObjectInformation towerInfo, Vector2 position)
+    {
+        towerInfoOutput.SetActive(true);
+        towerInfoOutput.transform.Find("타워이미지").GetComponent<Image>().sprite = gm.LoadImageToSprite(towerInfo.towerImagePath);
+        towerInfoOutput.transform.Find("투사체이미지").GetComponent<Image>().sprite = gm.LoadImageToSprite(towerInfo.projectileImagePath);
+        towerInfoOutput.transform.Find("공격력수치표기공간").GetComponent<Text>().text = towerInfo.attackDamage.ToString();
+        towerInfoOutput.transform.Find("공격속도수치표기공간").GetComponent<Text>().text = towerInfo.attackSpeed.ToString();
+        towerInfoOutput.transform.Find("비용수치표기공간").GetComponent<Text>().text = towerInfo.cost.ToString();
+        towerInfoOutput.GetComponent<RectTransform>().position = position;
     }
 
     public void HideTowerInformation()
     {
         towerInfoOutput.SetActive(false);
     }
-    
+
+    public void MoveToNstage(string stageName)
+    {
+        int canCount = 0;
+        for (int i = 0; i < gm.towerObjInfos.Length; i++)
+        {
+            if (gm.towerObjInfos[i].isTrue)
+            {
+                canCount++;
+            }
+        }
+        if(canCount >= gm.towerObjInfos.Length)
+        gm.ChangeStage(stageName);
+    }
+    public void ChangeStage(string stageName)
+    {
+        gm.ChangeStage(stageName);
+    }
 }

@@ -12,6 +12,8 @@ public class TowerObjectInformation
     public string projectileImagePath = null;
     public string thisFilePath = null;
     public int attackDamage = 0;
-    public int attackSpeed = 0;
+    public float attackSpeed = 0;
     public int cost = 0;
+    public int index = 0;
+    public bool isTrue = false;
 }

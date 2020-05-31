@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DrawingManager : MonoBehaviour
 {
@@ -12,19 +13,17 @@ public class DrawingManager : MonoBehaviour
     public GameObject _32Canvas;
     public GameObject _32CanvasCover;
     public GameObject _32TilePrefab;
-    Vector2 _32StartPosition = new Vector2(-0.484375f, -0.484375f);
+    Vector2 _32StartPosition = new Vector2(-0.484375f, -0.584375f);
     float _32DistantUnit = 0.03125f;
     GameObject[,] _32InterActiveTiles = new GameObject[32, 32];
     //8픽셀 - 투사체
     public GameObject _8Canvas;
     public GameObject _8CanvasCover;
     public GameObject _8TilePrefab;
-    Vector2 _8StartPosition = new Vector2(-0.4375f, -0.4375f);//0-0.0625-3*0.125
+    Vector2 _8StartPosition = new Vector2(-0.4375f, -0.5375f);//0-0.0625-3*0.125
     float _8DistantUnit = 0.125f;
     GameObject[,] _8InterActiveTiles = new GameObject[8, 8];
     //기타등등
-    //public string towerImagePath;
-    //public string projectileImagePath;
     GameManager gmInstance = null;
     int mode = 0;//타워 제작모드 = 0, 투사체 제작모드 = 1
 
@@ -224,7 +223,9 @@ public class DrawingManager : MonoBehaviour
     public void LoadLoadScreen()
     {
         _32Canvas.SetActive(false);
+        _32CanvasCover.SetActive(false);
         _8Canvas.SetActive(false);
+        _8CanvasCover .SetActive(false);
         loadScreen.gameObject.SetActive(true);
         drawingScreen.gameObject.SetActive(false);
         for (int i = 0; i < interactableButtons.Count; i++)
@@ -238,6 +239,7 @@ public class DrawingManager : MonoBehaviour
     }
     void LoadImageList()
     {
+        int colorIndex = 0;
         string FolderPath;
         if (mode == 0)
         {
@@ -247,20 +249,30 @@ public class DrawingManager : MonoBehaviour
         {
             FolderPath = gmInstance.projectileImagePath;
         }
-        List<SpriteWithInformation> imageList = new List<SpriteWithInformation>();
-        GameManager.gameManager.LoadImageList(Application.persistentDataPath + FolderPath, imageList);
-        GameObject InteractableImageButtonPrefab = Resources.Load<GameObject>("Prefab/DrawingScreen/상호작용 가능한 이미지 버튼"); //상호작용 가능한 이미지 리스트를 나타내는데 사용될 버튼 프리팹
-
-        for (int i = 0; i < imageList.Count; i++)
+        System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.persistentDataPath + FolderPath);
+        if (di.Exists)
         {
-            GameObject InteractableImageButton = Instantiate(InteractableImageButtonPrefab, scrollView);//버튼 생성
-            RectTransform rectTransForm = InteractableImageButton.GetComponent<RectTransform>();
-
-            InteractableImageButton.GetComponent<Image>().sprite = imageList[i].sprite;
-            InteractableImageButton.GetComponent<Button>().onClick.AddListener(ClickImage);//버튼에 리스너 부착
-            InteractableImageButton.GetComponent<ImageInformation>().filePath = imageList[i].spritePath;
-            InteractableImageButton.GetComponent<ImageInformation>().fileName = imageList[i].spriteName;
-            interactableButtons.Add(InteractableImageButton);
+            List<SpriteWithInformation> imageList = new List<SpriteWithInformation>();
+            GameManager.gameManager.LoadImageList(Application.persistentDataPath + FolderPath, imageList);
+            GameObject InteractableImageButtonPrefab = Resources.Load<GameObject>("Prefab/DrawingScreen/상호작용이미지버튼배경"); //상호작용 가능한 이미지 리스트를 나타내는데 사용될 버튼 프리팹
+            for (int i = 0; i < imageList.Count; i++)
+            {
+                GameObject interactableImageButton = Instantiate(InteractableImageButtonPrefab, scrollView);//버튼 생성
+                GameObject realButton = interactableImageButton.transform.GetChild(0).gameObject;
+                RectTransform rectTransForm = interactableImageButton.GetComponent<RectTransform>();
+                interactableImageButton.GetComponent<Image>().color = gmInstance.imageBackgroundColor[colorIndex++];
+                if (colorIndex >= gmInstance.imageBackgroundColor.Length)
+                    colorIndex = 0;
+                realButton.GetComponent<Image>().sprite = imageList[i].sprite;
+                realButton.GetComponent<Button>().onClick.AddListener(ClickImage);//버튼에 리스너 부착
+                realButton.GetComponent<ImageInformation>().filePath = imageList[i].spritePath;
+                realButton.GetComponent<ImageInformation>().fileName = imageList[i].spriteName;
+                interactableButtons.Add(interactableImageButton);
+            }
+        }
+        else
+        {
+            Debug.Log("폴더가 존재하지 않음");
         }
     }
     public void ClickImage()
@@ -271,48 +283,77 @@ public class DrawingManager : MonoBehaviour
     }
     public void DeleteImageFile()
     {
-        File.Delete(selectedImageButton.GetComponent<ImageInformation>().filePath);
-        for(int i=0; i< interactableButtons.Count; i++)
+        try
         {
-            Destroy(interactableButtons[i]);
+            File.Delete(selectedImageButton.GetComponent<ImageInformation>().filePath);
+            for (int i = 0; i < interactableButtons.Count; i++)
+            {
+                Destroy(interactableButtons[i]);
+            }
+            interactableButtons.Clear();
+            selectedImageView.sprite = null;
+            selectedImageNameView.text = null;
+            LoadImageList();
         }
-        interactableButtons.Clear();
-        selectedImageView.sprite = null;
-        selectedImageNameView.text = null;
-        LoadImageList();
+        catch
+        {
+        }
     }
     public void TerminateLoadScreen()
     {
         if (mode == 0)
+        {
             _32Canvas.SetActive(true);
+            _32CanvasCover.SetActive(true);
+        }
         else if (mode == 1)
+        {
             _8Canvas.SetActive(true);
+            _8CanvasCover.SetActive(true);
+        }
+        for (int i = 0; i < interactableButtons.Count; i++)
+        {
+            Destroy(interactableButtons[i]);
+        }
+        interactableButtons.Clear();
         drawingScreen.gameObject.SetActive(true);
         loadScreen.gameObject.SetActive(false);
     }
     public void ChangeCanvasImage()
     {
-        Sprite sourceImage = selectedImageButton.GetComponent<Image>().sprite;
-        if (mode == 0)
+        try
         {
-            for (int i = 0; i < 32; i++)
+            Sprite sourceImage = selectedImageButton.GetComponent<Image>().sprite;
+            if (mode == 0)
             {
-                for (int j = 0; j < 32; j++)
+                for (int i = 0; i < 32; i++)
                 {
-                    ChangePixel(i, j, sourceImage.texture.GetPixel(i, j));
+                    for (int j = 0; j < 32; j++)
+                    {
+                        ChangePixel(i, j, sourceImage.texture.GetPixel(i, j));
+                    }
                 }
             }
-        }
-        else if(mode == 1)
-        {
-            for (int i = 0; i < 8; i++)
+            else if (mode == 1)
             {
-                for (int j = 0; j < 8; j++)
+                for (int i = 0; i < 8; i++)
                 {
-                    ChangePixel(i, j, sourceImage.texture.GetPixel(i, j));
+                    for (int j = 0; j < 8; j++)
+                    {
+                        ChangePixel(i, j, sourceImage.texture.GetPixel(i, j));
+                    }
                 }
             }
+            TerminateLoadScreen();
         }
-        TerminateLoadScreen();
+        catch
+        {
+
+        }
+    }
+
+    public void moveToNstage(string stageName)//다음
+    {
+        gmInstance.ChangeStage(stageName);
     }
 }

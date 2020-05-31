@@ -6,10 +6,4 @@ public class EnemyStat : MonoBehaviour
 {
     public float moveSpeed;
     public int hp;
-
-    private void Update()
-    {
-        if (hp <= 0)
-            Destroy(this.gameObject);
-    }
 }

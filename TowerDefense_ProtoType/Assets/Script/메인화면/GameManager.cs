@@ -10,16 +10,18 @@ public class GameManager : MonoBehaviour
 
     //각종 패스
     public string resourcesFolderPath = "Assets/Resources";//문제없을시 나중에 삭제할 것
-    public string towerListPath = "유저제작파일저장소/타워객체";//문제없을시 나중에 삭제할 것
+    public string towerListPath = "/유저제작파일저장소/타워객체";//문제없을시 나중에 삭제할 것
     public string towerImagePath = "/유저제작파일저장소/타워이미지";
     public string projectileImagePath = "/유저제작파일저장소/투사체이미지";
     public string towerObjectPath = "/유저제작파일저장소/타워객체";
     public string towerObjInfoStore = "타워오브젝트정보체";
     string uiPrefabFolderPath = "Prefab/UI/";
-    
 
     //모든 씬 공통사항
     public GameObject uiCanvas = null;
+    int previousSceneIndex = 0;
+    public GameObject exitButton;
+    public Color[] imageBackgroundColor;
     //스테이지 선택 씬 변수
     public string StageInformationFolderPath = "StageInformation";
     StageInformation _currentStageInfo = null;//아마도 get ,set으로 구현해야 할 거같음
@@ -32,8 +34,10 @@ public class GameManager : MonoBehaviour
     //타워 선택 씬 변수
     public TowerObjectInformation[] towerObjInfos;
 
-    
-
+    //게임 플레이 씬 변수
+    public string MapFolderPath = "Play/Map";
+    public string towerPrefabPath = "Play/타워";
+    public string projectilePrefabPath = "Play/투사체베이스";
     private void Awake()
     {
         if (gameManager == null)
@@ -41,17 +45,28 @@ public class GameManager : MonoBehaviour
             Screen.SetResolution(1920, 1080, true);
             gameManager = this;
             DontDestroyOnLoad(this);
+            exitButton = null;
         }
-        GameManager.gameManager.uiCanvas = GameObject.Find("UICanvas");
     }
 
     private void Update()
     {
-        if (_currentStageInfo ==null) { }
+        if(uiCanvas == null)
+        {
+            uiCanvas = GameObject.Find("UICanvas");
+        }
+        if(exitButton == null)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                ShowExitMessage();
+            }
+        }
     }
 
     public void ChangeStage(string stageName)
     {
+        previousSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(stageName);
     }
     public void ShowGuideMessage(string context)
@@ -65,16 +80,23 @@ public class GameManager : MonoBehaviour
     //입력한 폴더의 이미지들을 파라미터로 지정된 리스트에 Sprite형태로 저장하는 함수
     public void LoadImageList(string folderPath, List<SpriteWithInformation> imageList)
     {
-        DirectoryInfo di = new DirectoryInfo(folderPath);
-        int i = 0;
-        foreach (FileInfo f in di.GetFiles())
+        try
         {
-            SpriteWithInformation instance = new SpriteWithInformation();
-            instance.sprite = LoadImageToSprite(f.ToString());
-            instance.spriteName = f.Name.Substring(0, f.Name.Length - 4);
-            instance.spritePath = f.ToString();
-            imageList.Add(instance);
-            i++;
+            DirectoryInfo di = new DirectoryInfo(folderPath);
+            int i = 0;
+            foreach (FileInfo f in di.GetFiles())
+            {
+                SpriteWithInformation instance = new SpriteWithInformation();
+                instance.sprite = LoadImageToSprite(f.ToString());
+                instance.spriteName = f.Name.Substring(0, f.Name.Length - 4);
+                instance.spritePath = f.ToString();
+                imageList.Add(instance);
+                i++;
+            }
+        }
+        catch (DirectoryNotFoundException e)
+        {
+            Debug.Log("폴더가 없습니다");
         }
     }
     public Sprite LoadImageToSprite(string filePath)
@@ -111,6 +133,13 @@ public class GameManager : MonoBehaviour
                 objectList.Add(JsonUtility.FromJson<TowerObjectInformation>(fromJsonData));
             }
         }
+    }
+
+    void ShowExitMessage()
+    {
+        GameObject exitButtonPrefab = Resources.Load<GameObject>("Prefab/UI/게임종료버튼");
+        Instantiate(Resources.Load<GameObject>("Prefab/UI/게임종료버튼"),uiCanvas.transform);
+        exitButton = exitButtonPrefab;
     }
     
 }

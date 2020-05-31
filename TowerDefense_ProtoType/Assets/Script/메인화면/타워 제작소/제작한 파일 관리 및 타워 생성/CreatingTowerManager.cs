@@ -24,6 +24,7 @@ public class CreatingTowerManager : MonoBehaviour
     public void Awake()
     {
         gmInstance = GameManager.gameManager;
+        gmInstance.uiCanvas = GameObject.Find("UICanvas");
         LoadImageList();
     }
 
@@ -76,8 +77,7 @@ public class CreatingTowerManager : MonoBehaviour
             InteractableImageButton.GetComponent<ImageInformation>().fileName = imageList[i].spriteName;
         }
     }
-
-    //json 파일 생성 및 로드 실험을 따로 해봐야 할 것 같음
+    
     public void CreatingTower()
     {
         if (!Directory.Exists(Application.persistentDataPath + GameManager.gameManager.towerObjectPath))
@@ -110,7 +110,8 @@ public class CreatingTowerManager : MonoBehaviour
             towerInfo.attackDamage = int.Parse(statusUi.attackDamage.text);
             towerInfo.attackSpeed = int.Parse(statusUi.attackSpeed.text);
             towerInfo.cost = int.Parse(statusUi.cost.text);
-
+            towerInfo.index = nextFolderIndex;
+            towerInfo.isTrue = true;
             string filePath = nextFolderPath + "/타워정보/status.json";
             towerInfo.thisFilePath = filePath;
             
@@ -120,5 +121,9 @@ public class CreatingTowerManager : MonoBehaviour
             GameManager.gameManager.ShowGuideMessage("타워 객체가 생성되었습니다");
         }
         else GameManager.gameManager.ShowGuideMessage("타워와 투사체를 선택해주세요");
+    }
+    public void changeStage(string stageName)
+    {
+        gmInstance.ChangeStage(stageName);
     }
 }

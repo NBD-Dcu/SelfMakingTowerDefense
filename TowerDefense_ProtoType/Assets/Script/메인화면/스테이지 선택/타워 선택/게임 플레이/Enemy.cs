@@ -4,92 +4,52 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public PointAccessor _PointAccessor;
-    public EnemyStat _stat;
-    int checkPointIndex = 0;
-
-    Vector2 startPostion, endPosition;
-
-    Vector3 rightAngle = new Vector3(0,0,0), 
-        leftAngle = new Vector3(0, 0, 180), 
-        upAngle = new Vector3(0, 0, 90), 
+    public GameObject NavigationPoints;
+    int navigationPointIndex = 0;
+    EnemyStat stat;
+    Vector3 rightAngle = new Vector3(0, 0, 0),
+        leftAngle = new Vector3(0, 0, 180),
+        upAngle = new Vector3(0, 0, 90),
         downAngle = new Vector3(0, 0, 270);
-    Quaternion rotation;// 미리 선언한 쿼터니언
-    
-    void Start()
+    Quaternion rotation;
+    private void Awake()
     {
-        _PointAccessor = GameObject.Find("Points").GetComponent<PointAccessor>();
-        startPostion = _PointAccessor.startPoint.transform.position;
-        endPosition = _PointAccessor.endPoint.transform.position;
-        _stat = GetComponent<EnemyStat>();
+        NavigationPoints = Map.map.navigationPoints;
+        stat = gameObject.GetComponent<EnemyStat>();
     }
 
-    
-    void Update()
+    private void Start()
+    {
+        
+    }
+
+    private void Update()
     {
         EnemyMove();
     }
-
     void EnemyMove()
     {
         Vector2 targetPosition;
-        if (checkPointIndex < _PointAccessor.checkPoints.Length)
-        {
-            targetPosition= _PointAccessor.checkPoints[checkPointIndex].transform.position;
+        targetPosition = NavigationPoints.transform.GetChild(navigationPointIndex).position;
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * stat.moveSpeed);
 
-            EnemyRotation(targetPosition);
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * _stat.moveSpeed);
-
-            if (transform.position.x == targetPosition.x)
-            {
-                if (transform.position.y == targetPosition.y)
-                    checkPointIndex++;
-            }
-        }
-        else if (checkPointIndex >= _PointAccessor.checkPoints.Length) {
-            targetPosition = endPosition;
-
-            EnemyRotation(targetPosition);
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * _stat.moveSpeed);
-        }
-    }
-    void EnemyRemove()
-    {
-
-    }
-    void EnemyRotation(Vector2 targetPosition)
-    {
-        //우측
-        if (transform.position.x < targetPosition.x && transform.position.y == targetPosition.y)
+        if (transform.position.x == targetPosition.x)
         {
-            rotation.eulerAngles = rightAngle;
-            transform.rotation = rotation;
+            if (transform.position.y == targetPosition.y)
+                navigationPointIndex++;
         }
-        //좌측
-        if (transform.position.x > targetPosition.x && transform.position.y == targetPosition.y)
-        {
-            rotation.eulerAngles = leftAngle;
-            transform.rotation = rotation;
-        }
-        //아래측
-        if (transform.position.x == targetPosition.x && transform.position.y > targetPosition.y)
-        {
-            rotation.eulerAngles = downAngle;
-            transform.rotation = rotation;
-        }
-        //위측
-        if (transform.position.x == targetPosition.x && transform.position.y < targetPosition.y)
-        {
-            rotation.eulerAngles = upAngle;
-            transform.rotation = rotation;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("EndPoint"))
+        EnemyRotation(targetPosition);
+        if(transform.position.Equals(Map.map.endPosition))
         {
             Destroy(this.gameObject);
         }
+    }
+
+    void EnemyRotation(Vector3 targetPosition)
+    {
+        Vector3 dir = targetPosition - transform.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        //transform.Rotate(new Vector3(0, 0, -90));//스프라이트의 방향에 따라 정해져야함
     }
 }
