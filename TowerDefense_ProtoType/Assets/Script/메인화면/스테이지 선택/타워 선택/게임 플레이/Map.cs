@@ -9,6 +9,8 @@ public class Map : MonoBehaviour
     Vector2 startPosition;
     public Vector2 endPosition;
     public GameObject navigationPoints;
+    public bool isLastEnemy = false;
+    public int playerLife = 10;
     GameObject constructionPoints;
 
     private void Awake()
@@ -31,8 +33,9 @@ public class Map : MonoBehaviour
 
     IEnumerator CreateEnemy()
     {
-        for(int i=0; i<createEnemyInfos.Length; i++)
+        for (int i=0; i<createEnemyInfos.Length; i++)
         {
+            yield return new WaitForSeconds(createEnemyInfos[i].startTime);
             for (int j = 0; j < createEnemyInfos[i].NumberOfCreation; j++)
             {
                 Enemy _enemy = Instantiate(createEnemyInfos[i].enemy);
@@ -40,5 +43,6 @@ public class Map : MonoBehaviour
                 yield return new WaitForSeconds(createEnemyInfos[i].CreationCycle);
             }
         }
+        isLastEnemy = true;
     }
 }

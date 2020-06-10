@@ -8,5 +8,8 @@ public class StageInformation : MonoBehaviour
     public string stageName = null;
     public int stageIndex = 0;
     public int numberOfWaves = 0;
-    //적이 생성되는 순서 아직 미구현
+    public int startGold = 0;
+    public int resourceRisingRatio = 1;
+    public float cycleOfRiseResources = 1;
+    
 }

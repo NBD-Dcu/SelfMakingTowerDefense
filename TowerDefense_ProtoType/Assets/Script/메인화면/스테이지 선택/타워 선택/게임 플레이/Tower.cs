@@ -39,6 +39,7 @@ public class Tower : MonoBehaviour
             {
                 Projectile projectile = Resources.Load<Projectile>(gm.projectilePrefabPath);
                 Instantiate(projectile);
+                projectile.attackDamage = towerObjInfo.attackDamage;
                 projectile.currentTarget = currentTarget;
                 projectile.transform.position = transform.position;
                 projectile.GetComponent<SpriteRenderer>().sprite = gm.LoadImageToSprite(towerObjInfo.projectileImagePath);
@@ -83,7 +84,7 @@ public class Tower : MonoBehaviour
                 currentTarget = null;
                 if (targets.Count != 0)//이후 타겟리스트에 객체가 남아있으면 공격 대상으로 설정한다. 기준은 제일 먼저 타겟목록에 들어온 객체
                 {
-                    currentTarget = targets[0];
+                    currentTarget = targets[targets.Count-1];
                 }
             }
         }

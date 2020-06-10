@@ -68,24 +68,6 @@ public class StageSelectManager : MonoBehaviour
     void StageButtonImageManage()
     {
         currentStage.image.sprite = stageInfos[currentStageNum].stagePreviewImage;
-
-        //if (currentStageNum == 0)
-        //{
-        //    previousStage.GetComponent<Image>().sprite = stageInfos[stageInfos.Length - 1].stagePreviewImage;
-        //    nextStage.image.sprite = stageInfos[currentStageNum + 1].stagePreviewImage;
-        //}
-
-        //else if(currentStageNum == stageInfos.Length - 1)
-        //{
-        //    previousStage.image.sprite = stageInfos[currentStageNum - 1].stagePreviewImage;
-        //    nextStage.image.sprite = stageInfos[0].stagePreviewImage;
-        //}
-
-        //else
-        //{
-        //    previousStage.image.sprite = stageInfos[currentStageNum - 1].stagePreviewImage;
-        //    nextStage.image.sprite = stageInfos[currentStageNum + 1].stagePreviewImage;
-        //}
     }
     
 }

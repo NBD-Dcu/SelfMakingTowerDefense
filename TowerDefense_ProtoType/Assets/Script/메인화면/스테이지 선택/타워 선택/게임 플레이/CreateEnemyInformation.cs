@@ -5,6 +5,7 @@ using UnityEngine;
 public class CreateEnemyInformation : MonoBehaviour
 {
     public int NumberOfCreation = 0;
-    public int CreationCycle = 0;
+    public float CreationCycle = 0;
+    public float startTime = 0;
     public Enemy enemy = null;
 }

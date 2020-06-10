@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c33078ed709084b92f9f1d18fcc075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumberOfCreation: 100
-  CreationCycle: 1
+  NumberOfCreation: 5
+  CreationCycle: 0.5
+  startTime: 1
   enemy: {fileID: 2317826055761250327, guid: f8a3487798300dc4a8113b2aec77c52b, type: 3}

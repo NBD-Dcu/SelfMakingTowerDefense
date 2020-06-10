@@ -47,3 +47,6 @@ MonoBehaviour:
   stageName: 1
   stageIndex: 1
   numberOfWaves: 3
+  startGold: 0
+  resourceRisingRatio: 1
+  cycleOfRiseResources: 1

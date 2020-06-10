@@ -31,18 +31,23 @@ public class ConstructionPoint : MonoBehaviour
     {
         if (isBuilt == false && player.currentTowerInfo !=null)
         {
-            Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D[] hits = Physics2D.RaycastAll(touchPos, Camera.main.transform.forward);
-            for (int i = 0; i < hits.Length; i++)
+            if (player.currentTowerInfo.cost <= player.goldResources)
             {
-                if (this.gameObject.Equals(hits[i].collider.gameObject))
+                Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D[] hits = Physics2D.RaycastAll(touchPos, Camera.main.transform.forward);
+                for (int i = 0; i < hits.Length; i++)
                 {
-                    Tower tower = Resources.Load<Tower>(gm.towerPrefabPath);
-                    tower.towerObjInfo = player.currentTowerInfo;
-                    tower.transform.position = transform.position;
-                    Instantiate(tower);
-                    isBuilt = true;
-                    player.currentTowerInfo = null;
+                    if (this.gameObject.Equals(hits[i].collider.gameObject))
+                    {
+                        Tower tower = Resources.Load<Tower>(gm.towerPrefabPath);
+                        tower.towerObjInfo = player.currentTowerInfo;
+                        tower.transform.position = transform.position;
+                        Instantiate(tower);
+                        isBuilt = true;
+                        player.goldResources = player.goldResources - tower.towerObjInfo.cost;
+                        player.RenewalGoldResource();
+                        player.currentTowerInfo = null;
+                    }
                 }
             }
         }

@@ -8,6 +8,12 @@ public class Projectile : MonoBehaviour
     GameManager gm;
     Vector3 lastTargetPosition;
     public float moveSpeed = 10;
+    public int attackDamage = 0;
+
+    private void Awake()
+    {
+        
+    }
 
     void Start()
     {
@@ -58,7 +64,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.Equals(currentTarget))
         {
-            //collision.getcomponent<enemystat>().hp = collision.getcomponent<enemystat>().hp - _projectilestat.damage;//투사체 데미지 따라 깎이도록 조정해야함
+            collision.gameObject.GetComponent<Enemy>().stat.hp = collision.gameObject.GetComponent<Enemy>().stat.hp - attackDamage;//투사체 데미지 따라 깎이도록 조정해야함
             Destroy(this.gameObject);
         }
     }

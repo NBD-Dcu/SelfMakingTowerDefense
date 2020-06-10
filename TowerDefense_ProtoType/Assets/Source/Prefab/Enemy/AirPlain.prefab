@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2317826055761250322}
   m_Layer: 8
   m_Name: AirPlain
-  m_TagString: Untagged
+  m_TagString: Enemy1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NavigationPoints: {fileID: 0}
+  stat: {fileID: 0}
 --- !u!114 &2317826055761250324
 MonoBehaviour:
   m_ObjectHideFlags: 0
