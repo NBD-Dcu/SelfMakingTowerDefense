@@ -259,7 +259,6 @@ public class DrawingManager : MonoBehaviour
             {
                 GameObject interactableImageButton = Instantiate(InteractableImageButtonPrefab, scrollView);//버튼 생성
                 GameObject realButton = interactableImageButton.transform.GetChild(0).gameObject;
-                RectTransform rectTransForm = interactableImageButton.GetComponent<RectTransform>();
                 interactableImageButton.GetComponent<Image>().color = gmInstance.imageBackgroundColor[colorIndex++];
                 if (colorIndex >= gmInstance.imageBackgroundColor.Length)
                     colorIndex = 0;

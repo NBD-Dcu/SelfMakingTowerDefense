@@ -80,6 +80,7 @@ public class Player : MonoBehaviour
                 if (enemyTemp.Length == 0)
                 {
                     Debug.Log("게임 클리어");
+                    GamePlayStageManager.GPSM.GameCleared();
                 }
             }
     }

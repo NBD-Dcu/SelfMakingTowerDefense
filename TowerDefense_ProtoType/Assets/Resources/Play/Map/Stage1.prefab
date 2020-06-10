@@ -4077,7 +4077,7 @@ MonoBehaviour:
   endPosition: {x: 0, y: 0}
   navigationPoints: {fileID: 0}
   isLastEnemy: 0
-  playerLife: 1
+  playerLife: 11
 --- !u!1 &3963829123576631172
 GameObject:
   m_ObjectHideFlags: 0

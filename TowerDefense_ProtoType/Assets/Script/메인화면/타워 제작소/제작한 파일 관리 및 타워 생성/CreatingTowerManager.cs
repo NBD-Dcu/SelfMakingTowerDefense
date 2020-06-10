@@ -47,34 +47,44 @@ public class CreatingTowerManager : MonoBehaviour
 
     void LoadImageList()
     {
-        
+        int colorIndex = 0;
         List<SpriteWithInformation> imageList = new List<SpriteWithInformation>();
         GameManager.gameManager.LoadImageList(Application.persistentDataPath + gmInstance.towerImagePath, imageList);
-        GameObject InteractableImageButtonPrefab = Resources.Load<GameObject>("Prefab/DrawingScreen/상호작용 가능한 이미지 버튼"); //상호작용 가능한 이미지 리스트를 나타내는데 사용될 버튼 프리팹
-
+        //GameObject InteractableImageButtonPrefab = Resources.Load<GameObject>("Prefab/DrawingScreen/상호작용 가능한 이미지 버튼"); //상호작용 가능한 이미지 리스트를 나타내는데 사용될 버튼 프리팹
+        GameObject InteractableImageButtonPrefab = Resources.Load<GameObject>("Prefab/DrawingScreen/상호작용이미지버튼배경");
         //타워 이미지 리스트 생성
         for (int i = 0; i < imageList.Count; i++)
         {
             GameObject InteractableImageButton = Instantiate(InteractableImageButtonPrefab, towerScrollView);
-            RectTransform rectTransForm = InteractableImageButton.GetComponent<RectTransform>();//나중에 지우기
-
-            InteractableImageButton.GetComponent<Image>().sprite = imageList[i].sprite;
-            InteractableImageButton.GetComponent<Button>().onClick.AddListener(ClickTowerImage);//버튼에 리스너 부착
-            InteractableImageButton.GetComponent<ImageInformation>().filePath = imageList[i].spritePath;
-            InteractableImageButton.GetComponent<ImageInformation>().fileName = imageList[i].spriteName;
+            GameObject realButton = InteractableImageButton.transform.GetChild(0).gameObject;
+            InteractableImageButton.GetComponent<Image>().color = gmInstance.imageBackgroundColor[colorIndex++];
+            if (colorIndex >= gmInstance.imageBackgroundColor.Length)
+                colorIndex = 0;
+            realButton.GetComponent<Image>().sprite = imageList[i].sprite;
+            realButton.GetComponent<Button>().onClick.AddListener(ClickTowerImage);//버튼에 리스너 부착
+            realButton.GetComponent<ImageInformation>().filePath = imageList[i].spritePath;
+            realButton.GetComponent<ImageInformation>().fileName = imageList[i].spriteName;
         }
+        colorIndex = 0;
         //투사체 이미지 리스트 생성
         imageList.Clear();
         GameManager.gameManager.LoadImageList(Application.persistentDataPath + gmInstance.projectileImagePath, imageList);
         for (int i = 0; i < imageList.Count; i++)
         {
             GameObject InteractableImageButton = Instantiate(InteractableImageButtonPrefab, ProjectilScrollView);
-            RectTransform rectTransForm = InteractableImageButton.GetComponent<RectTransform>();//나중에 지우기
+            GameObject realButton = InteractableImageButton.transform.GetChild(0).gameObject;
+            InteractableImageButton.GetComponent<Image>().color = gmInstance.imageBackgroundColor[colorIndex++];
+            if (colorIndex >= gmInstance.imageBackgroundColor.Length)
+                colorIndex = 0;
+            realButton.GetComponent<Image>().sprite = imageList[i].sprite;
+            realButton.GetComponent<Button>().onClick.AddListener(ClickProjectileImage);//버튼에 리스너 부착
+            realButton.GetComponent<ImageInformation>().filePath = imageList[i].spritePath;
+            realButton.GetComponent<ImageInformation>().fileName = imageList[i].spriteName;
 
-            InteractableImageButton.GetComponent<Image>().sprite = imageList[i].sprite;
-            InteractableImageButton.GetComponent<Button>().onClick.AddListener(ClickProjectileImage);//버튼에 리스너 부착
-            InteractableImageButton.GetComponent<ImageInformation>().filePath = imageList[i].spritePath;
-            InteractableImageButton.GetComponent<ImageInformation>().fileName = imageList[i].spriteName;
+            //InteractableImageButton.GetComponent<Image>().sprite = imageList[i].sprite;
+            //InteractableImageButton.GetComponent<Button>().onClick.AddListener(ClickProjectileImage);//버튼에 리스너 부착
+            //InteractableImageButton.GetComponent<ImageInformation>().filePath = imageList[i].spritePath;
+            //InteractableImageButton.GetComponent<ImageInformation>().fileName = imageList[i].spriteName;
         }
     }
     
