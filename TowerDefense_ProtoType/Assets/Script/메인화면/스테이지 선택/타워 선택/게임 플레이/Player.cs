@@ -52,11 +52,6 @@ public class Player : MonoBehaviour
         currentTowerInfo = EventSystem.current.currentSelectedGameObject.GetComponent<TowerSocket_Play>().towerObjInfo;
     }
 
-    public void ClickObtion()
-    {
-        GameObject obtionPrefab = Resources.Load<GameObject>("Play/옵션호출-플레이스테이지");
-        Instantiate(obtionPrefab, gm.uiCanvas.transform);
-    }
     IEnumerator RisingOfResources()
     {
         while (true)

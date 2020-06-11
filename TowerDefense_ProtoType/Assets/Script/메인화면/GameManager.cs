@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public string MapFolderPath = "Play/Map";
     public string towerPrefabPath = "Play/타워";
     public string projectilePrefabPath = "Play/투사체베이스";
+
     private void Awake()
     {
         if (gameManager == null)
@@ -140,6 +141,20 @@ public class GameManager : MonoBehaviour
         GameObject exitButtonPrefab = Resources.Load<GameObject>("Prefab/UI/게임종료버튼");
         Instantiate(Resources.Load<GameObject>("Prefab/UI/게임종료버튼"),uiCanvas.transform);
         exitButton = exitButtonPrefab;
+    }
+
+    //초기화 관련 함수들
+    public void BackToStageSelect()
+    {
+        _currentStageInfo = null;
+    }
+
+    public void BackToTowerSelcet()
+    {
+       for(int i=0; i < towerObjInfos.Length; i++)
+        {
+            towerObjInfos[i] = null;
+        }
     }
     
 }

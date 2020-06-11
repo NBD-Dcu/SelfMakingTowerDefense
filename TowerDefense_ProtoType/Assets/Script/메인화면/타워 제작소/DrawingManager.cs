@@ -40,8 +40,18 @@ public class DrawingManager : MonoBehaviour
     public Transform scrollView;
     List<GameObject> interactableButtons = new List<GameObject>();
 
+    public Vector2 startPosition_draw;
+    public Vector2 endPosition_draw;
+
+    UndoRedoHistory<Sprite> _32CanvasUndoRedoHis;
+    UndoRedoHistory<Sprite> _8CanvasUndoRedoHis;
+
+    public GameObject currentReferdCanvas;//추후에 이걸로 사용하는 코드로 교체하기
+    public GameObject currentReferdCanvasCover;//추후에 이걸로 사용하는 코드로 교체하기
+    public UndoRedoHistory<Sprite> currentReferdCanvasHis;
     private void Awake()
     {
+        //초기화
         if (drawingManager == null)
         {
             gmInstance = GameManager.gameManager;
@@ -54,6 +64,8 @@ public class DrawingManager : MonoBehaviour
             InitGrid(8, 8);
             mode = 0;
             GameManager.gameManager.uiCanvas = GameObject.Find("UICanvas");
+            _32CanvasUndoRedoHis = new UndoRedoHistory<Sprite>();
+            _8CanvasUndoRedoHis = new UndoRedoHistory<Sprite>();
         }
     }
     private void Start()
@@ -64,6 +76,22 @@ public class DrawingManager : MonoBehaviour
     private void Update()
     {
         
+    }
+
+    private void FixedUpdate()
+    {
+        if (mode == 0)
+        {
+            currentReferdCanvas = _32Canvas;
+            currentReferdCanvasCover = _32CanvasCover;
+            currentReferdCanvasHis = _32CanvasUndoRedoHis;
+        }
+        else if (mode == 1)
+        {
+            currentReferdCanvas = _8Canvas;
+            currentReferdCanvasCover = _8CanvasCover;
+            currentReferdCanvasHis = _8CanvasUndoRedoHis;
+        }
     }
 
     //그림 그리기 화면에서 사용
@@ -85,6 +113,8 @@ public class DrawingManager : MonoBehaviour
             _8CanvasCover.SetActive(true);
         }
     }
+
+    //좌표와 색깔을 받아 현재 모드에 따라 캔버스의 픽셀을 교체하고 영구적으로 저장
     public void ChangePixel(int x, int y, Color color)
     {
         Texture2D tex;
@@ -92,15 +122,16 @@ public class DrawingManager : MonoBehaviour
         {
             tex = _32Canvas.GetComponent<SpriteRenderer>().sprite.texture;
             tex.SetPixel(x, y, color);
-            tex.Apply();//실제 그림 파일에 픽셀 반영
+            tex.Apply();
         }
         else if(mode == 1)
         {
             tex = _8Canvas.GetComponent<SpriteRenderer>().sprite.texture;
             tex.SetPixel(x, y, color);
-            tex.Apply();//실제 그림 파일에 픽셀 반영
+            tex.Apply();
         }
     }
+    //타일생성
     public void CreateInterActiveTiles()
     {
         //32픽셀
@@ -134,19 +165,19 @@ public class DrawingManager : MonoBehaviour
                 interActiveTile.GetComponent<TileScript>().positionY = j;
             }
         }
-
-
     }
+    //모드에 따른 x,y크기를 입력시 초기화
     void InitGrid(int x, int y)
     {
         for (int i = 0; i < x; i++)
         {
             for(int j=0; j< y; j++)
             {
-                ChangePixel(j, i, new Color(1, 1, 1, 0));//투명색으로 초기화
+                ChangePixel(j, i, new Color(1, 1, 1, 0));
             }
         }
     }
+    //캔버스를 초기화
     public void ClearCanvas()
     {
         if (mode == 0)
@@ -154,15 +185,18 @@ public class DrawingManager : MonoBehaviour
         if (mode == 1)
             InitGrid(8, 8);
     }
+    //사용할 색 변경
     public void ChangeBrushColor()
     {
         GameObject clikedButton = GameObject.Find(EventSystem.current.currentSelectedGameObject.name);
         currentColor = clikedButton.GetComponent<Image>().color;
     }
+    //지우개로 변경
     public void ChangeBrushToEraser()
     {
         currentColor = new Color(255, 255, 255, 0);
     }
+    //만든 이미지 저장
     public void SaveImage()
     {
         string folderPath = null;
@@ -205,7 +239,6 @@ public class DrawingManager : MonoBehaviour
                     }
                         File.WriteAllBytes(Application.persistentDataPath + folderPath + "/" + InputNameField.text + ".png", bytes);
                         GameManager.gameManager.ShowGuideMessage("파일 저장됨");
-                    
                 }
                 else
                 {
@@ -219,7 +252,7 @@ public class DrawingManager : MonoBehaviour
 
     }
     
-    //불러오기 화면에서 사용
+    //불러오기 화면으로 전환
     public void LoadLoadScreen()
     {
         _32Canvas.SetActive(false);
@@ -237,6 +270,7 @@ public class DrawingManager : MonoBehaviour
         selectedImageNameView.text = null;
         LoadImageList();
     }
+    //타워or투사체 이미지를 연결된 스크롤 뷰에 나타냄
     void LoadImageList()
     {
         int colorIndex = 0;
@@ -274,12 +308,14 @@ public class DrawingManager : MonoBehaviour
             Debug.Log("폴더가 존재하지 않음");
         }
     }
+    //스크롤 뷰에 있는 이미지를 클릭했을때 동작
     public void ClickImage()
     {
         selectedImageButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         selectedImageView.sprite = selectedImageButton.GetComponent<Image>().sprite;
         selectedImageNameView.text = selectedImageButton.GetComponent<ImageInformation>().fileName;
     }
+    //선택한 이미지를 삭제
     public void DeleteImageFile()
     {
         try
@@ -298,6 +334,7 @@ public class DrawingManager : MonoBehaviour
         {
         }
     }
+    //불러오기 화면에서 나갈때 동작
     public void TerminateLoadScreen()
     {
         if (mode == 0)
@@ -318,6 +355,7 @@ public class DrawingManager : MonoBehaviour
         drawingScreen.gameObject.SetActive(true);
         loadScreen.gameObject.SetActive(false);
     }
+
     public void ChangeCanvasImage()
     {
         try
@@ -354,5 +392,46 @@ public class DrawingManager : MonoBehaviour
     public void moveToNstage(string stageName)//다음
     {
         gmInstance.ChangeStage(stageName);
+    }
+
+    public void Undo()
+    {
+        if (currentReferdCanvasHis.IsCanUndo)
+        {
+            Vector2 spriteSize = currentReferdCanvas.GetComponent<SpriteRenderer>().sprite.rect.size;
+            Sprite stackImage = currentReferdCanvasHis.Undo();
+            for (int i = 0; i < spriteSize.x; i++)
+            {
+                for (int j = 0; j < spriteSize.y; j++)
+                {
+                    ChangePixel(i, j, stackImage.texture.GetPixel(i, j));
+                    Debug.Log(stackImage.texture.GetPixel(i, j));
+                }
+            }
+            Debug.Log("언두");
+        }
+    }
+
+    public void Redo()
+    {
+        if (currentReferdCanvasHis.IsCanRedo)
+        {
+            Vector2 spriteSize = currentReferdCanvas.GetComponent<SpriteRenderer>().sprite.rect.size;
+            Sprite stackImage =  currentReferdCanvasHis.Redo();
+            for (int i = 0; i < spriteSize.x; i++)
+            {
+                for (int j = 0; j < spriteSize.y; j++)
+                {
+                    ChangePixel(i, j, stackImage.texture.GetPixel(i, j));
+                }
+            }
+            Debug.Log("리두");
+        }
+    }
+
+    public void SaveCurrentState()
+    {
+        Debug.Log("언두 스택에 추가");
+        currentReferdCanvasHis.AddState(currentReferdCanvas.GetComponent<SpriteRenderer>().sprite);
     }
 }

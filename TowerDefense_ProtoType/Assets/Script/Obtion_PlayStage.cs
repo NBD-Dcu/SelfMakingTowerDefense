@@ -20,10 +20,12 @@ public class Obtion_PlayStage : MonoBehaviour
     
     public void ChangeStage(string stageName)
     {
+        Time.timeScale = 1;
         GameManager.gameManager.ChangeStage(stageName);
     }
     public void TurnOffThis()
     {
+        Time.timeScale = 1;
         Destroy(this.gameObject);
     }
 }

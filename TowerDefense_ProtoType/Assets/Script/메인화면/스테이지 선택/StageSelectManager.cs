@@ -19,6 +19,7 @@ public class StageSelectManager : MonoBehaviour
         {
             instance = this;
             gm = GameManager.gameManager;
+            gm.BackToStageSelect();
             stageInfos = new StageInformation[5];
 
             for (int i = 0; i < stageInfos.Length; i++)

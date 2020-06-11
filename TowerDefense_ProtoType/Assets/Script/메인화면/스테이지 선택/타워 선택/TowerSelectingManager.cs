@@ -18,6 +18,7 @@ public class TowerSelectingManager : MonoBehaviour
     private void Awake()
     {
         gm = GameManager.gameManager;
+        gm.BackToTowerSelcet();
         instance = this;
         dragingImage = Resources.Load<Image>("드래깅시 생성되는 이미지"); 
         CreateTowerObjList();
