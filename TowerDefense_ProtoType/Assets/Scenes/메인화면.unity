@@ -647,6 +647,8 @@ MonoBehaviour:
   - {r: 0.5372549, g: 0.5137255, b: 1, a: 1}
   - {r: 0.8000001, g: 0.5137255, b: 1, a: 1}
   StageInformationFolderPath: StageInformation
+  MapFolderPath: Play/Map
+  currentMap: {fileID: 0}
   towerObjInfos:
   - towerObjectName: 
     projectileName: 
@@ -688,7 +690,6 @@ MonoBehaviour:
     cost: 0
     index: 0
     isTrue: 0
-  MapFolderPath: Play/Map
   towerPrefabPath: "Play/\uD0C0\uC6CC"
   projectilePrefabPath: "Play/\uD22C\uC0AC\uCCB4\uBCA0\uC774\uC2A4"
 --- !u!1 &544533031

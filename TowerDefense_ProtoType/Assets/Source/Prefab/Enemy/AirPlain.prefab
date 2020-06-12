@@ -112,7 +112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  hp: 3
+  hp: 1
+  point: 1
 --- !u!61 &2317826055761250325
 BoxCollider2D:
   m_ObjectHideFlags: 0

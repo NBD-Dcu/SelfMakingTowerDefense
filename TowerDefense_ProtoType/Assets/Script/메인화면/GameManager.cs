@@ -23,19 +23,20 @@ public class GameManager : MonoBehaviour
     public GameObject exitButton;
     public Color[] imageBackgroundColor;
     //스테이지 선택 씬 변수
-    public string StageInformationFolderPath = "StageInformation";
+    public string StageInformationFolderPath = "StageInformation";//나중에 검토후 지울 것
+    public string MapFolderPath = "Resources/Play/Map";
     StageInformation _currentStageInfo = null;//아마도 get ,set으로 구현해야 할 거같음
-    public StageInformation currentStageInfo
-    {
-        get { return _currentStageInfo;}
-        set { _currentStageInfo = value; }
-    }
-
+    //public StageInformation currentStageInfo
+    //{
+    //    get { return _currentStageInfo;}
+    //    set { _currentStageInfo = value; }
+    //}
+    public Map currentMap;
     //타워 선택 씬 변수
     public TowerObjectInformation[] towerObjInfos;
 
     //게임 플레이 씬 변수
-    public string MapFolderPath = "Play/Map";
+    //public string MapFolderPath = "Play/Map";
     public string towerPrefabPath = "Play/타워";
     public string projectilePrefabPath = "Play/투사체베이스";
 
@@ -146,6 +147,7 @@ public class GameManager : MonoBehaviour
     //초기화 관련 함수들
     public void BackToStageSelect()
     {
+        currentMap = null;
         _currentStageInfo = null;
     }
 

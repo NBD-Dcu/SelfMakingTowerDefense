@@ -5,12 +5,14 @@ using UnityEngine;
 public class Map : MonoBehaviour
 {
     public CreateEnemyInformation[] createEnemyInfos;
+    public StageInformation stageInfos;
     public static Map map;
     Vector2 startPosition;
     public Vector2 endPosition;
     public GameObject navigationPoints;
     public bool isLastEnemy = false;
     public int playerLife = 10;
+    public CreateEnemyInformation currentWaveInfo;
     GameObject constructionPoints;
 
     private void Awake()
@@ -19,6 +21,7 @@ public class Map : MonoBehaviour
         startPosition = transform.Find("StartPoint").position;
         navigationPoints = transform.Find("NavigationPoints").gameObject;
         endPosition = navigationPoints.transform.GetChild(navigationPoints.transform.childCount-1).position;
+        currentWaveInfo = createEnemyInfos[0];
     }
     void Start()
     {
@@ -35,6 +38,7 @@ public class Map : MonoBehaviour
     {
         for (int i=0; i<createEnemyInfos.Length; i++)
         {
+            currentWaveInfo = createEnemyInfos[i];
             yield return new WaitForSeconds(createEnemyInfos[i].startTime);
             for (int j = 0; j < createEnemyInfos[i].NumberOfCreation; j++)
             {

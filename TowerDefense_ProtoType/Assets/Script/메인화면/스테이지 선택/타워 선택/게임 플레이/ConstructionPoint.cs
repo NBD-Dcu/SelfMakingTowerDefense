@@ -53,7 +53,7 @@ public class ConstructionPoint : MonoBehaviour
                                 Instantiate(tower);
                                 isBuilt = true;
                                 player.goldResources = player.goldResources - tower.towerObjInfo.cost;
-                                player.RenewalGoldResource();
+                                //player.RenewalGoldResource();
                                 player.currentTowerInfo = null;
                             }
                         }

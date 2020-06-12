@@ -373,6 +373,7 @@ GameObject:
   - component: {fileID: 209096221}
   - component: {fileID: 209096220}
   - component: {fileID: 209096219}
+  - component: {fileID: 209096222}
   m_Layer: 5
   m_Name: "\uC120\uD0DD\uD55C \uD0C0\uC6CC (3)"
   m_TagString: Untagged
@@ -396,7 +397,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -344.99997}
+  m_AnchoredPosition: {x: 300, y: -144.99997}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &209096219
@@ -471,8 +472,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ea6e05e0dec52994f8be87d087058e60, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -489,6 +490,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 209096217}
   m_CullTransparentMesh: 0
+--- !u!114 &209096222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209096217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02d6614bceca6f469a1553344a56b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerObjInfo:
+    towerObjectName: 
+    projectileName: 
+    towerImagePath: 
+    projectileImagePath: 
+    thisFilePath: 
+    attackDamage: 0
+    attackSpeed: 0
+    cost: 0
+    index: 0
+    isTrue: 0
+  index: 3
 --- !u!1 &230609793
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +785,7 @@ GameObject:
   - component: {fileID: 535707896}
   - component: {fileID: 535707895}
   - component: {fileID: 535707894}
+  - component: {fileID: 535707897}
   m_Layer: 5
   m_Name: "\uC120\uD0DD\uD55C \uD0C0\uC6CC"
   m_TagString: Untagged
@@ -783,7 +809,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100.00006, y: -145}
+  m_AnchoredPosition: {x: -300.00006, y: -144.99994}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &535707894
@@ -858,8 +884,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ea6e05e0dec52994f8be87d087058e60, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -876,6 +902,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535707892}
   m_CullTransparentMesh: 0
+--- !u!114 &535707897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535707892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02d6614bceca6f469a1553344a56b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerObjInfo:
+    towerObjectName: 
+    projectileName: 
+    towerImagePath: 
+    projectileImagePath: 
+    thisFilePath: 
+    attackDamage: 0
+    attackSpeed: 0
+    cost: 0
+    index: 0
+    isTrue: 0
+  index: 0
 --- !u!1 &647915052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,6 +1413,7 @@ GameObject:
   - component: {fileID: 777350784}
   - component: {fileID: 777350783}
   - component: {fileID: 777350782}
+  - component: {fileID: 777350785}
   m_Layer: 5
   m_Name: "\uC120\uD0DD\uD55C \uD0C0\uC6CC (1)"
   m_TagString: Untagged
@@ -1386,7 +1437,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -145}
+  m_AnchoredPosition: {x: -100, y: -144.99994}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &777350782
@@ -1461,8 +1512,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ea6e05e0dec52994f8be87d087058e60, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1479,6 +1530,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777350780}
   m_CullTransparentMesh: 0
+--- !u!114 &777350785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777350780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02d6614bceca6f469a1553344a56b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerObjInfo:
+    towerObjectName: 
+    projectileName: 
+    towerImagePath: 
+    projectileImagePath: 
+    thisFilePath: 
+    attackDamage: 0
+    attackSpeed: 0
+    cost: 0
+    index: 0
+    isTrue: 0
+  index: 1
 --- !u!1 &813925634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1703,6 +1778,7 @@ GameObject:
   - component: {fileID: 1071138599}
   - component: {fileID: 1071138598}
   - component: {fileID: 1071138597}
+  - component: {fileID: 1071138600}
   m_Layer: 5
   m_Name: "\uC120\uD0DD\uD55C \uD0C0\uC6CC (2)"
   m_TagString: Untagged
@@ -1726,7 +1802,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100.00006, y: -344.99997}
+  m_AnchoredPosition: {x: 99.99997, y: -144.99997}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1071138597
@@ -1801,8 +1877,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ea6e05e0dec52994f8be87d087058e60, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1819,6 +1895,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071138595}
   m_CullTransparentMesh: 0
+--- !u!114 &1071138600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071138595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02d6614bceca6f469a1553344a56b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerObjInfo:
+    towerObjectName: 
+    projectileName: 
+    towerImagePath: 
+    projectileImagePath: 
+    thisFilePath: 
+    attackDamage: 0
+    attackSpeed: 0
+    cost: 0
+    index: 0
+    isTrue: 0
+  index: 2
 --- !u!1 &1084204108
 GameObject:
   m_ObjectHideFlags: 0
@@ -1930,8 +2030,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -350, y: 276}
-  m_SizeDelta: {x: 400, y: 90}
+  m_AnchoredPosition: {x: -483.99997, y: 276}
+  m_SizeDelta: {x: 800, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1195033842
 MonoBehaviour:
@@ -2767,12 +2867,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8301887, g: 0.57564974, b: 0.57564974, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 51ed9237b10253344afc496626cb0f60, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

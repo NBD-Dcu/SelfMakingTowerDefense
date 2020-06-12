@@ -12,15 +12,17 @@ public class TowerSelectingManager : MonoBehaviour
     TowerObjectInformation currentSelecTowerObjInfo;
     GameManager gm;
     public Canvas uiCanvas;
-    public Image dragingImage;
+    public GameObject dragingImage;
     public GameObject towerInfoOutput;
+    public Sprite towerSocketImage;
 
     private void Awake()
     {
         gm = GameManager.gameManager;
         gm.BackToTowerSelcet();
         instance = this;
-        dragingImage = Resources.Load<Image>("드래깅시 생성되는 이미지"); 
+        dragingImage = Resources.Load<GameObject>("드래깅시 생성되는 이미지");
+        towerSocketImage = towerSockets[0].GetComponent<Image>().sprite;
         CreateTowerObjList();
     }
     

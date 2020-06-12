@@ -10,20 +10,21 @@ public class Player : MonoBehaviour
     public Button[] towerSocket;
     public TowerObjectInformation currentTowerInfo;
     public int goldResources = 0;
-    public Text goldText;
     public int life = 10;
-    //맵 정보, 맵 빼고는 가져올 필요가 없을 가능성이 농후
-    Map map;
+    public int point = 0;
+    public int upgradeFigures = 0;
+    
+    public Map map;
 
     void Start()
     {
         player = this;
         gm = GameManager.gameManager;
-        goldResources = gm.currentStageInfo.startGold;
-        StartCoroutine(RisingOfResources());
+        StartCoroutine(RisingOfGoldResources());
         //맵 로드
-        map = Instantiate(Resources.Load<Map>("Play/Map/Stage1"));
+        map = Instantiate(gm.currentMap);
         life = map.playerLife;
+        goldResources = map.stageInfos.startGold;
         currentTowerInfo = null;
         //타워소켓에 선택한 타워들 동기화
         for (int i=0; i<towerSocket.Length; i++)
@@ -38,7 +39,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void FixedUpdate()
@@ -52,20 +52,20 @@ public class Player : MonoBehaviour
         currentTowerInfo = EventSystem.current.currentSelectedGameObject.GetComponent<TowerSocket_Play>().towerObjInfo;
     }
 
-    IEnumerator RisingOfResources()
+    IEnumerator RisingOfGoldResources()
     {
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            goldResources = goldResources + gm.currentStageInfo.resourceRisingRatio;
-            RenewalGoldResource();
+            goldResources = goldResources + map.stageInfos.resourceRisingRatio + map.stageInfos.upgradeValueOfReource*upgradeFigures;
         }
     }
-    public void RenewalGoldResource()
-    {
-        goldText.text = goldResources.ToString() + "G";
-    }
 
+    public void UpgradeGoldRisingRatio()
+    {
+        point -= 5;
+        upgradeFigures++;
+    }
     public void JudgeGameClear()
     {
         GameObject[] enemyTemp = GameObject.FindGameObjectsWithTag("Enemy1");

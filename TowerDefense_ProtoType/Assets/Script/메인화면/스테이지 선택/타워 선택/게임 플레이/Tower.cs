@@ -9,7 +9,7 @@ public class Tower : MonoBehaviour
     CircleCollider2D attackRangeCollider;
     List<GameObject> targets;
     GameObject currentTarget;
-    float attackTimer = 1;
+    float attackTimer = 2;
     private void Awake()
     {
         gm = GameManager.gameManager;
@@ -35,15 +35,16 @@ public class Tower : MonoBehaviour
     {
         if(currentTarget != null)
         {
-            if (attackTimer >= 1f / towerObjInfo.attackSpeed)
+            if (attackTimer >= (1f / towerObjInfo.attackSpeed))
             {
+                int a = 0;
                 Projectile projectile = Resources.Load<Projectile>(gm.projectilePrefabPath);
-                Instantiate(projectile);
-                projectile.attackDamage = towerObjInfo.attackDamage;
-                projectile.currentTarget = currentTarget;
-                projectile.transform.position = transform.position;
+                projectile.attackDamage = towerObjInfo.attackDamage; 
+                projectile.currentTarget = currentTarget; 
+                projectile.transform.position = transform.position; 
                 projectile.GetComponent<SpriteRenderer>().sprite = gm.LoadImageToSprite(towerObjInfo.projectileImagePath);
-                attackTimer = 0;
+                Instantiate(projectile);
+                attackTimer = 0; 
             }
         }
     }

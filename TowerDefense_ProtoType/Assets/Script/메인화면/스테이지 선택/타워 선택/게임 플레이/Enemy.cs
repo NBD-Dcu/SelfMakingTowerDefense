@@ -61,6 +61,7 @@ public class Enemy : MonoBehaviour
     {
         if(stat.hp <= 0)
         {
+            Player.player.point += stat.point;
             Destroy(this.gameObject);
         }
     }

@@ -7,7 +7,8 @@ public class TowerObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 {
     public TowerObjectInformation towerObjInfo;
     GameManager gm;
-    Image dragingObj;
+    GameObject dragingObj;
+    //Image dragingObj;
     RectTransform dragingObjRtransform;
     TowerSelectingManager TSManager;
     Button targetSocket;
@@ -18,6 +19,7 @@ public class TowerObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
     private void Update()
     {
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -50,7 +52,9 @@ public class TowerObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (shortestDistance < 1000)
         {
             GameManager.gameManager.towerObjInfos[socketIndex] = towerObjInfo;
+
             targetSocket = TSManager.towerSockets[socketIndex];
+            targetSocket.GetComponent<TowerSocket_SelectScene>().towerObjInfo = towerObjInfo;
             targetSocket.GetComponent<Image>().sprite = gm.LoadImageToSprite(towerObjInfo.towerImagePath);
         }
         Destroy(dragingObj);

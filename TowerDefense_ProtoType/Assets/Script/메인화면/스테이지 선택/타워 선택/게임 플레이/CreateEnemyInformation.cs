@@ -8,4 +8,5 @@ public class CreateEnemyInformation : MonoBehaviour
     public float CreationCycle = 0;
     public float startTime = 0;
     public Enemy enemy = null;
+    public int waveNumber = 1;
 }

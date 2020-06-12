@@ -6,4 +6,5 @@ public class EnemyStat : MonoBehaviour
 {
     public float moveSpeed;
     public int hp;
+    public int point;
 }

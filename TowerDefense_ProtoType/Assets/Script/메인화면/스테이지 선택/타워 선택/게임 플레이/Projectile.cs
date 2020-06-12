@@ -7,12 +7,12 @@ public class Projectile : MonoBehaviour
     public GameObject currentTarget;
     GameManager gm;
     Vector3 lastTargetPosition;
-    public float moveSpeed = 10;
+    public float moveSpeed;
     public int attackDamage = 0;
 
     private void Awake()
     {
-        
+        moveSpeed = 20;
     }
 
     void Start()
@@ -22,16 +22,16 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        Move();
-        Rotation();
+        Move(); 
+        Rotation(); 
     }
     void Move()//이동,타격을 관장
     {
+        int a = 0;
         if (currentTarget != null)
         {
             transform.position = Vector2.MoveTowards(transform.position, currentTarget.transform.position, Time.deltaTime * moveSpeed);//타겟의 현재 지점으로 이동
             lastTargetPosition = currentTarget.transform.position;//타겟의 현재 지점을 기록
-
         }
         else if (currentTarget == null)
         {

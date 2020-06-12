@@ -7,8 +7,16 @@ using UnityEngine.SceneManagement;
 public class GamePlayStageManager : MonoBehaviour
 {
     public static GamePlayStageManager GPSM = null;
+    public Text stageNameUi;
+    public Text currentWaveUi;
     public GameObject gameFailedUi;
     public GameObject gameClearUi;
+    public Text goldUi;
+    public Text pointUi;
+    public Text LifeUi;
+
+    public int currentWaveNumber;
+
     GameManager gm;
     private void Awake()
     {
@@ -22,7 +30,15 @@ public class GamePlayStageManager : MonoBehaviour
     
     void Update()
     {
-        
+        RenewalUi();
+    }
+    public void RenewalUi()
+    {
+        goldUi.text = Player.player.goldResources + "G";
+        pointUi.text = Player.player.point + "P";
+        LifeUi.text = "남은 목숨 : "+Player.player.life;
+        stageNameUi.text = Player.player.map.stageInfos.stageName;
+        currentWaveUi.text = "Wave - " + Player.player.map.currentWaveInfo.waveNumber.ToString();
     }
 
     public void ClickObtion()
