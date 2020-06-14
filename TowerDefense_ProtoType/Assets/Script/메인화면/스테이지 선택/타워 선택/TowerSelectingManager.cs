@@ -87,6 +87,7 @@ public class TowerSelectingManager : MonoBehaviour
         towerInfoOutput.transform.Find("공격력수치표기공간").GetComponent<Text>().text = towerInfo.attackDamage.ToString();
         towerInfoOutput.transform.Find("공격속도수치표기공간").GetComponent<Text>().text = towerInfo.attackSpeed.ToString();
         towerInfoOutput.transform.Find("비용수치표기공간").GetComponent<Text>().text = towerInfo.cost.ToString();
+        towerInfoOutput.transform.Find("타워이름").GetComponent<Text>().text = towerInfo.towerObjectName;
         towerInfoOutput.GetComponent<RectTransform>().position = position;
     }
 
@@ -100,13 +101,24 @@ public class TowerSelectingManager : MonoBehaviour
         int canCount = 0;
         for (int i = 0; i < gm.towerObjInfos.Length; i++)
         {
-            if (gm.towerObjInfos[i].isTrue)
+            try
             {
-                canCount++;
+                if (gm.towerObjInfos[i].isTrue)
+                {
+                    canCount++;
+                }
+            }
+            catch
+            {
+
             }
         }
         if(canCount >= gm.towerObjInfos.Length)
         gm.ChangeStage(stageName);
+        else
+        {
+            gm.ShowGuideMessage("타워목록을 모두 채워주세요");
+        }
     }
     public void ChangeStage(string stageName)
     {

@@ -63,8 +63,11 @@ public class Player : MonoBehaviour
 
     public void UpgradeGoldRisingRatio()
     {
-        point -= 5;
-        upgradeFigures++;
+        if (point >= 5)
+        {
+            point -= 5;
+            upgradeFigures++;
+        }
     }
     public void JudgeGameClear()
     {
