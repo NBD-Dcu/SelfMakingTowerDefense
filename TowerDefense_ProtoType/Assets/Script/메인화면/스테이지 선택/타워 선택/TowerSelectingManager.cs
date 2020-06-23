@@ -68,7 +68,6 @@ public class TowerSelectingManager : MonoBehaviour
                 socketIndex = i;
             }
         }
-        //towerObjInfos의 널을 체크하는 방법을 연구하기
         if (string.IsNullOrEmpty(gm.towerObjInfos[socketIndex].towerImagePath))
         {
 
@@ -88,12 +87,30 @@ public class TowerSelectingManager : MonoBehaviour
         towerInfoOutput.transform.Find("공격속도수치표기공간").GetComponent<Text>().text = towerInfo.attackSpeed.ToString();
         towerInfoOutput.transform.Find("비용수치표기공간").GetComponent<Text>().text = towerInfo.cost.ToString();
         towerInfoOutput.transform.Find("타워이름").GetComponent<Text>().text = towerInfo.towerObjectName;
-        towerInfoOutput.GetComponent<RectTransform>().position = position;
-    }
+        RectTransform tempTIOP = towerInfoOutput.GetComponent<RectTransform>();
 
+        Vector2 targetPos = position;
+        //if(targetPos.x > 650)
+        //    targetPos.x = 650;
+        //if(targetPos.x < -650)
+        //    targetPos.x = -650;
+        //if (targetPos.y > 274)
+        //    targetPos.y = 274;
+        //if (targetPos.y < -274)
+        //    targetPos.y = -274;
+        tempTIOP.position = targetPos;
+
+        StartCoroutine(HideTowerInforationByTime());
+    }
+    IEnumerator HideTowerInforationByTime()
+    {
+        yield return new WaitForSeconds(2.5f);
+        towerInfoOutput.SetActive(false);
+    }
     public void HideTowerInformation()
     {
         towerInfoOutput.SetActive(false);
+        StopCoroutine(HideTowerInforationByTime());
     }
 
     public void MoveToNstage(string stageName)

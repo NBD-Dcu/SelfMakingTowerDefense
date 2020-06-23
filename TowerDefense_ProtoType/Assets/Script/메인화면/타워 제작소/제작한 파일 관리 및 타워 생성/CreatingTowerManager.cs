@@ -101,7 +101,17 @@ public class CreatingTowerManager : MonoBehaviour
             TowerObjectInformation towerInfo = new TowerObjectInformation();
             //타워 오브젝트 폴더 지정
             DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + GameManager.gameManager.towerObjectPath);
-            int nextFolderIndex = Directory.GetDirectories(Application.persistentDataPath + GameManager.gameManager.towerObjectPath, "*", SearchOption.TopDirectoryOnly).Length;
+            int nextFolderIndex = 0;
+            while (true)
+            {
+                DirectoryInfo tempDi = new DirectoryInfo(di.ToString() + "/" + nextFolderIndex);
+                if (tempDi.Exists)
+                    nextFolderIndex++;
+                else
+                    break;
+            }
+            //int nextFolderIndex = Directory.GetDirectories(Application.persistentDataPath + GameManager.gameManager.towerObjectPath, "*", SearchOption.TopDirectoryOnly).Length;
+
             string nextFolderPath = Application.persistentDataPath + GameManager.gameManager.towerObjectPath + "/" + nextFolderIndex;
             Directory.CreateDirectory(nextFolderPath);
             Directory.CreateDirectory(nextFolderPath + "/타워이미지");

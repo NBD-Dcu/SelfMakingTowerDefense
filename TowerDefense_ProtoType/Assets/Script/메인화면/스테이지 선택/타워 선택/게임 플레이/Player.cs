@@ -20,11 +20,13 @@ public class Player : MonoBehaviour
     {
         player = this;
         gm = GameManager.gameManager;
-        StartCoroutine(RisingOfGoldResources());
+        
         //맵 로드
         map = Instantiate(gm.currentMap);
+        StartCoroutine(RisingOfGoldResources());
         life = map.playerLife;
         goldResources = map.stageInfos.startGold;
+
         currentTowerInfo = null;
         //타워소켓에 선택한 타워들 동기화
         for (int i=0; i<towerSocket.Length; i++)
@@ -56,7 +58,7 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(map.stageInfos.cycleOfRiseResources);
             goldResources = goldResources + map.stageInfos.resourceRisingRatio + map.stageInfos.upgradeValueOfReource*upgradeFigures;
         }
     }

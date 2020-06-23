@@ -50,4 +50,4 @@ MonoBehaviour:
   startGold: 10
   resourceRisingRatio: 1
   upgradeValueOfReource: 1
-  cycleOfRiseResources: 1
+  cycleOfRiseResources: 0.5
