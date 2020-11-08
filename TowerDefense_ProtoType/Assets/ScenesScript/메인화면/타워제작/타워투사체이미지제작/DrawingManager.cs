@@ -293,7 +293,7 @@ public class DrawingManager : MonoBehaviour
             {
                 GameObject interactableImageButton = Instantiate(InteractableImageButtonPrefab, scrollView);//버튼 생성
                 GameObject realButton = interactableImageButton.transform.GetChild(0).gameObject;
-                interactableImageButton.GetComponent<Image>().color = gmInstance.imageBackgroundColor[colorIndex++];
+                interactableImageButton.GetComponent<Image>().color = gmInstance.imageBackgroundColor[colorIndex++];//리스트 업 된 이미지의 순서마다 배경색이 정해진다
                 if (colorIndex >= gmInstance.imageBackgroundColor.Length)
                     colorIndex = 0;
                 realButton.GetComponent<Image>().sprite = imageList[i].sprite;
